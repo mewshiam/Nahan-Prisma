@@ -1,0 +1,34 @@
+{
+  "name": "nahan-prisma",
+  "version": "1.0.0",
+  "description": "Nahan — the serverless gateway, ported from Cloudflare Workers to Prisma Compute (Bun runtime)",
+  "type": "module",
+  "module": "module.ts",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --hot src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "bun": ">=1.1.0"
+  },
+  "keywords": [
+    "nahan",
+    "prisma",
+    "prisma-compute",
+    "bun",
+    "vless",
+    "trojan",
+    "proxy",
+    "gateway"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mewshiam/Nahan-Prisma"
+  },
+  "homepage": "https://github.com/mewshiam/Nahan-Prisma#readme",
+  "bugs": {
+    "url": "https://github.com/mewshiam/Nahan-Prisma/issues"
+  }
+}
