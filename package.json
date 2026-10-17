@@ -7,7 +7,15 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "bun --hot src/index.ts",
+    "build": "bun build src/compute.ts --outdir dist --target bun",
+    "deploy": "bun run build && prisma deploy module.ts",
     "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@prisma/composer": "latest",
+    "@prisma/composer-prisma-cloud": "latest",
+    "prisma": "latest",
+    "typescript": "latest"
   },
   "engines": {
     "bun": ">=1.1.0"

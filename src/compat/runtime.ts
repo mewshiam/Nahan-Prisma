@@ -27,7 +27,29 @@ import { D1SqliteAdapter } from "./d1";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const ROOT = join(__dirname, "..", ".."); // repo root (src/compat → root)
+/**
+ * Resolve a bundled page asset across run layouts:
+ *  - source layout (bun run src/index.ts)   → src/pages/*
+ *  - repo-root cwd (Prisma Compute service) → <cwd>/src/pages/*
+ *  - bundled layout (dist/compute.js)       → <dist>/../src/pages/*
+ * Falls back to undefined → the worker then uses its GitHub raw fallback.
+ */
+function resolvePage(file: string): string | undefined {
+    const candidates = [
+        join(__dirname, "..", "pages", file), // src/compat → src/pages
+        join(process.cwd(), "src", "pages", file),
+        join(__dirname, "..", "src", "pages", file), // dist → src/pages
+        join(__dirname, "pages", file),
+    ];
+    for (const c of candidates) {
+        try {
+            if (existsSync(c)) return c;
+        } catch {
+            /* try next */
+        }
+    }
+    return undefined;
+}
 
 export interface EnvBindings {
     IOT_DB: D1SqliteAdapter;
@@ -55,8 +77,8 @@ export function getEnv(): EnvBindings {
 
     const iotDb = new D1SqliteAdapter(dataDir, "nahan.sqlite");
 
-    const dashboardPath = join(ROOT, "src", "pages", "dashboard.html");
-    const subscriptionPath = join(ROOT, "src", "pages", "subscription.html");
+    const dashboardPath = resolvePage("dashboard.html");
+    const subscriptionPath = resolvePage("subscription.html");
 
     const env: EnvBindings = {
         IOT_DB: iotDb,
