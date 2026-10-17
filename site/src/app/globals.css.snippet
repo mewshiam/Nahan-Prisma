@@ -1,0 +1,111 @@
+/* ─── Nahan-Prisma · Prisma.io design tokens ─────────────────────────── */
+/* Palette extracted from prisma.io (2026): dark #0e0e0e/#151515 surfaces,
+   white text, confetti accents gold/cyan/pink/red/orange, Inter type.   */
+
+:root,
+.dark {
+  --np-bg: #0e0e0e;
+  --np-surface: #151515;
+  --np-surface-2: #1a1a1a;
+  --np-border: rgba(255, 255, 255, 0.08);
+  --np-border-strong: rgba(255, 255, 255, 0.14);
+  --np-text: #ffffff;
+  --np-text-dim: #a3a3a3;
+  --np-text-faint: #646567;
+  --np-gold: #f3c306;
+  --np-cyan: #01d7e4;
+  --np-pink: #f00e5c;
+  --np-red: #f43531;
+  --np-orange: #f37a03;
+}
+
+.np-page {
+  background: var(--np-bg);
+  color: var(--np-text);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter);
+}
+
+.np-mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+/* subtle grain/glow helpers */
+.np-glow-gold {
+  box-shadow: 0 0 80px -20px rgba(243, 195, 6, 0.25);
+}
+.np-grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 55%, transparent 100%);
+}
+.np-seg-1 { background: var(--np-cyan); }
+.np-seg-2 { background: var(--np-gold); }
+.np-seg-3 { background: var(--np-pink); }
+.np-seg-4 { background: var(--np-red); }
+.np-seg-5 { background: var(--np-orange); }
+
+.np-card {
+  background: var(--np-surface);
+  border: 1px solid var(--np-border);
+  border-radius: 1rem;
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+}
+.np-card:hover {
+  border-color: var(--np-border-strong);
+  background: var(--np-surface-2);
+}
+
+.np-btn-primary {
+  background: #ffffff;
+  color: #0e0e0e;
+  font-weight: 600;
+  border-radius: 0.625rem;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.np-btn-primary:hover {
+  background: #f5f5f5;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px -8px rgba(255, 255, 255, 0.35);
+}
+.np-btn-ghost {
+  background: transparent;
+  color: var(--np-text);
+  border: 1px solid var(--np-border-strong);
+  font-weight: 500;
+  border-radius: 0.625rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.np-btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+@keyframes np-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.np-rise { animation: np-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.np-rise-1 { animation-delay: 0.05s; }
+.np-rise-2 { animation-delay: 0.15s; }
+.np-rise-3 { animation-delay: 0.25s; }
+.np-rise-4 { animation-delay: 0.4s; }
+
+@keyframes np-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.np-pulse { animation: np-pulse-dot 1.6s ease-in-out infinite; }
+
+@keyframes np-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.np-caret { animation: np-caret 1.1s step-end infinite; }
+
+/* terminal scroll */
+.np-term::-webkit-scrollbar { width: 6px; height: 6px; }
+.np-term::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
