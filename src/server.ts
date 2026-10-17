@@ -22,6 +22,14 @@
 import { getEnv, getCtx } from "./compat/runtime";
 import { handleFetch, handleScheduled, createTunnel } from "./worker";
 
+/** Per-connection state Bun hands to the websocket handlers. */
+interface WsData {
+    env: unknown;
+    ctx: unknown;
+    wsRelayIdx: number;
+    tunnel: ReturnType<typeof createTunnel> | null;
+}
+
 export function startGateway(
     port: number,
     hostname: string = "0.0.0.0",
@@ -54,7 +62,7 @@ export function startGateway(
     setInterval(runScheduledSweep, SWEEP_INTERVAL_MS);
 
     // ── the server ──────────────────────────────────────────────────
-    const server = Bun.serve({
+    const server = Bun.serve<WsData>({
         port,
         hostname,
         maxRequestBodySize: 1024 * 1024 * 128, // 128 MB — sync payloads
@@ -80,10 +88,8 @@ export function startGateway(
                                 env: envBinding,
                                 ctx: ctxShim,
                                 wsRelayIdx,
-                                tunnel: null as ReturnType<
-                                    typeof createTunnel
-                                > | null,
-                            },
+                                tunnel: null,
+                            } satisfies WsData,
                         });
                     } catch {
                         return false;

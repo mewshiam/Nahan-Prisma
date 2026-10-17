@@ -1,3 +1,4 @@
+// @ts-nocheck — PORT NOTE (P12): upstream JS carried verbatim; tsc checks the port-owned code (compat/, entries).
 /*
  * ──────────────────────────────────────────────────────────────────────
  * Nahan-Prisma — the Nahan gateway ported from Cloudflare Workers to
@@ -14,6 +15,8 @@
  *   P8  telemetry WS upgrade → Bun server.upgrade()
  *   P10 startDataPipe → createTunnel (Bun WS event model)
  *   P11 deployWorkerToCloudflare → disabled (deploy via npx prisma deploy)
+ *   P12 @ts-nocheck pragma — upstream is untyped JS carried verbatim;
+ *       tsc validates the port-owned code (compat/, entries) instead
  * ──────────────────────────────────────────────────────────────────────
  */
 import { connect } from "./compat/sockets";

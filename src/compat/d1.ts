@@ -76,7 +76,10 @@ export class D1SqliteAdapter {
             all: () => {
                 try {
                     const stmt = this.db.prepare(sql);
-                    const rows = stmt.all(...params) as Record<string, unknown>[];
+                    const rows = stmt.all(...(params as never[])) as Record<
+                        string,
+                        unknown
+                    >[];
                     return { results: rows, success: true, meta: {} };
                 } catch (e) {
                     // D1 throws on SQL errors too — mirror that behaviour.
@@ -99,9 +102,9 @@ export class D1SqliteAdapter {
                     throw e;
                 }
             },
-            first: () => {
+            first: <T = unknown>() => {
                 const stmt = this.db.prepare(sql);
-                return (stmt.get(...(params as never[])) ?? null) as unknown;
+                return (stmt.get(...(params as never[])) ?? null) as T | null;
             },
         });
 

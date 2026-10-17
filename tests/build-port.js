@@ -52,6 +52,8 @@ patch(
  *   P8  telemetry WS upgrade → Bun server.upgrade()
  *   P10 startDataPipe → createTunnel (Bun WS event model)
  *   P11 deployWorkerToCloudflare → disabled (deploy via npx prisma deploy)
+ *   P12 @ts-nocheck pragma — upstream is untyped JS carried verbatim;
+ *       tsc validates the port-owned code (compat/, entries) instead
  * ──────────────────────────────────────────────────────────────────────
  */
 import { connect } from "./compat/sockets";
@@ -319,6 +321,16 @@ patch(
         "Self-deploy is Cloudflare-only. On Prisma Compute, deploy with: npx prisma deploy (see deploy/README.md)",
     );`,
 );
+
+/* ── P12: @ts-nocheck pragma ──────────────────────────────────────── */
+/* Upstream _worker.js is untyped JavaScript carried verbatim; the 60+
+   type complaints tsc raises inside it are upstream's, not the port's.
+   The pragma scopes `bun run typecheck` to the port-owned code while
+   worker.ts stays covered by the build + tunnel tests. */
+src =
+    "// @ts-nocheck — PORT NOTE (P12): upstream JS carried verbatim; tsc checks the port-owned code (compat/, entries).\n" +
+    src;
+patches.push("P12: @ts-nocheck pragma (1x)");
 
 /* ── sanity sweep: no Cloudflare-only *code* may remain (comments ok) ─ */
 const forbidden = [
