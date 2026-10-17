@@ -1,5 +1,7 @@
 # Deploying Nahan-Prisma to Prisma Compute
 
+> 📚 More guides in the [`docs/`](../docs/README.md) hub: architecture deep-dive, migration from Cloudflare, client setup, self-hosting elsewhere.
+
 This guide replaces upstream Nahan's "Step-by-Step Deployment Guide" for
 Cloudflare Workers. Prisma Compute hosts TypeScript apps on Bun, on bare-metal
 microVMs — no D1 bindings, no wrangler, no Cloudflare account needed.
