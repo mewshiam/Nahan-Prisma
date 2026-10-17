@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" role="img" aria-label="Nahan-Prisma mark">
+  <!-- Nahan-Prisma segmented "N" · Prisma.io confetti palette -->
+  <!-- cyan #01d7e4 · gold #f3c306 · pink #f00e5c · red #f43531 · orange #f37a03 -->
+  <path fill="#01d7e4" d="M3 0H6V14H3A3 3 0 0 1 0 11V3A3 3 0 0 1 3 0Z"/>
+  <path fill="#f3c306" d="M0 14H6V24H3A3 3 0 0 1 0 21V14Z"/>
+  <path fill="#f00e5c" d="M9 0H17A3 3 0 0 1 20 3V6H6V3A3 3 0 0 1 9 0Z"/>
+  <path fill="#f43531" d="M6 6H12V12H6Z"/>
+  <path fill="#f37a03" d="M6 12H17A3 3 0 0 1 20 15V21A3 3 0 0 1 17 24H9A3 3 0 0 1 6 21V12Z"/>
+</svg>
