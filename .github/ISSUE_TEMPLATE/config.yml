@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/mewshiam/Nahan-Prisma/tree/main/docs
+    about: Deployment, architecture, migration and client guides — check here first
+  - name: 💬 Upstream Nahan discussions
+    url: https://github.com/itsyebekhe/nahan/discussions
+    about: Questions about the gateway itself (protocols, clients, features) — they are upstream concerns
+  - name: 🔒 Security reports
+    url: https://github.com/mewshiam/Nahan-Prisma/security/advisories/new
+    about: Vulnerabilities go here, never into public issues

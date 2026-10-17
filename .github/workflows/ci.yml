@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: typecheck & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Build (Prisma Compute bundle)
+        run: bun run build
+
+      - name: Adapter unit test
+        run: bun tests/test-connect-adapter.ts
+
+      - name: Boot gateway for tunnel tests
+        run: |
+          mkdir -p /tmp/nahan-ci-data
+          PORT=8977 DATA_DIR=/tmp/nahan-ci-data nohup bun run src/index.ts > /tmp/nahan-ci.log 2>&1 &
+          for i in $(seq 1 40); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8977/sync || true)
+            if [ "$code" != "000" ]; then echo "gateway up (HTTP $code)"; exit 0; fi
+            sleep 0.5
+          done
+          echo "gateway failed to boot"; cat /tmp/nahan-ci.log; exit 1
+
+      - name: VLESS tunnel test
+        run: bun tests/test-vless-tunnel.ts
+
+      - name: Trojan tunnel test
+        run: bun tests/test-trojan-tunnel.ts
